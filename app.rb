@@ -1,7 +1,11 @@
 require "sinatra"
 require "sinatra/reloader"
 require "http"
+require "net/http"
+require "uri"
 require "json"
+
+
 
 get("/") do
 
@@ -58,19 +62,10 @@ get("/:from_currency/:to_currency") do
   url = URI(api_url)
 
   response = Net::HTTP.get(url)
+  
   @object = JSON.parse(response)
+  
   @conversion = @object.fetch("result")
 
-  #@symbols = parsed_data.fetch("conversions").values
-
-  #@symbols.each do |zebra, giraffe|
-    #@key = zebra
-    #@value = giraffe
-
-  #get symbols from the JSON
-  #@symbols = parsed_data.fetch("currencies").keys
-
   erb(:flexible)
-
-
 end
