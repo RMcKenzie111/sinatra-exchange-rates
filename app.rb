@@ -55,21 +55,17 @@ get("/:from_currency/:to_currency") do
   api_url = "http://api.exchangerate.host/convert?access_key=#{ENV["EXCHANGE_RATE_KEY"]}&from=#{@original_currency}&to=#{@destination_currency}&amount=1"
 
   # some more code to parse the URL and render a view template
-  raw_data = HTTP.get(api_url)
+  url = URI(api_url)
 
-  raw_data_string = raw_data.to_s
+  response = Net::HTTP.get(url)
+  @object = JSON.parse(response)
+  @conversion = @object.fetch("result")
 
-  parsed_data = JSON.parse(raw_data_string)
+  #@symbols = parsed_data.fetch("conversions").values
 
-  @symbols = parsed_data.fetch("conversions").values
-
-  @symbols.each do |zebra, giraffe|
-    @key = zebra
-    @value = giraffe
-   
- end
-  
-
+  #@symbols.each do |zebra, giraffe|
+    #@key = zebra
+    #@value = giraffe
 
   #get symbols from the JSON
   #@symbols = parsed_data.fetch("currencies").keys
