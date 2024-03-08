@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sinatra Exchange Rates</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+  </head>
+
+  <body>
+
+    <h1>Currency pairs</h1>
+
+    <ul>
+      <% @symbols.each do |a_roll| %>
+        <li>
+        <a href='/<%= a_roll %>'>Convert 1 <%= a_roll %> to...</a>
+          <!--<%= a_roll %>-->
+        </li>
+          <% end %>
+    </ul>
+    
+          
+    
+
+  </body>
+</html>

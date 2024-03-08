@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sinatra Exchange Rates</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+  </head>
+
+  <body>
+
+    <h1>Convert <%= @original_currency %></h1>
+
+    <p>Go <a href="/">back</a></p>
+
+    <ul>
+      <% @symbols.each do |a_roll| %>
+        <li>
+        <a href='/<%= @original_currency %>/<%= a_roll %>'>Convert 1 <%= @original_currency %> to <%= a_roll %>...</a>
+          <!--<%= a_roll %>-->
+        </li>
+          <% end %>
+    </ul>
+
+</body>
+</html>
+    
