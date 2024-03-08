@@ -5,7 +5,6 @@ require "json"
 
 get("/") do
 
-  the_key = ENV.fetch("EXCHANGE_RATE_KEY")
   api_url = "http://api.exchangerate.host/list?access_key=#{ENV["EXCHANGE_RATE_KEY"]}"
 
   raw_data = HTTP.get(api_url)
