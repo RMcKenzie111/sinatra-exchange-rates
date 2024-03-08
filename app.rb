@@ -2,7 +2,10 @@ require "sinatra"
 require "sinatra/reloader"
 require "http"
 
+
 get("/") do
+
+  the_key = ENV.fetch("EXCHANGE_RATE_KEY")
   api_url = "http://api.exchangerate.host/list?access_key=#{ENV["EXCHANGE_RATE_KEY"]}"
 
   raw_data = HTTP.get(api_url)
@@ -40,6 +43,7 @@ get("/:from_currency") do
 
   #get symbols from the JSON
   @symbols = parsed_data.fetch("currencies").keys
+  #@symbolss = parsed_data.fetch("currencies").values full names of currencies
 
   erb(:dynmc_from_currency)
 
@@ -49,10 +53,29 @@ get("/:from_currency/:to_currency") do
   @original_currency = params.fetch("from_currency")
   @destination_currency = params.fetch("to_currency")
 
-  "http://api.exchangerate.host/convert?access_key=#{ENV["EXCHANGE_RATE_KEY"]}&from=#{@original_currency}&to=#{@destination_currency}&amount=1"
+  api_url = "http://api.exchangerate.host/convert?access_key=#{ENV["EXCHANGE_RATE_KEY"]}&from=#{@original_currency}&to=#{@destination_currency}&amount=1"
 
   # some more code to parse the URL and render a view template
+  raw_data = HTTP.get(api_url)
 
+  raw_data_string = raw_data.to_s
+
+  parsed_data = JSON.parse(raw_data_string)
+
+  @symbols = parsed_data.fetch("conversions").values
+
+  @symbols.each do |zebra, giraffe|
+    @key = zebra
+    @value = giraffe
+   
+ end
+  
+
+
+  #get symbols from the JSON
+  #@symbols = parsed_data.fetch("currencies").keys
+
+  erb(:flexible)
 
 
 end
